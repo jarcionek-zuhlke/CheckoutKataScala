@@ -34,4 +34,8 @@ class CheckoutSystemTest extends FlatSpec with Matchers {
         checkoutSystem.checkout("Banana") should be (BANANA_PRICE)
     }
 
+    "apple and banana" should "share the offer \"buy one, get cheapest free\"" in {
+        checkoutSystem.checkout("Banana", "Apple") should be (APPLE_PRICE)
+    }
+
 }

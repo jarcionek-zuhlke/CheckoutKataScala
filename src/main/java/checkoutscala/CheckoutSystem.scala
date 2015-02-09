@@ -11,7 +11,7 @@ object CheckoutSystem {
         var totalPrice = 0
 
         for ((offer: Offer, items: List[Item]) <- offerMap) {
-            val prices: List[Price] = items.map(item => priceOf(item))
+            val prices: List[Price] = items.map(item => priceOf(item)).sorted.reverse
 
             var paidCount = 0
             var gotFreeCount = 0
@@ -69,6 +69,7 @@ object CheckoutSystem {
     private def offerFor(product: Item): Offer = {
         product match {
             case "Apple" => Offer(1, 1)
+            case "Banana" => Offer(1, 1)
             case "Orange" => Offer(2, 1)
             case _ => Offer(1, 0)
         }
