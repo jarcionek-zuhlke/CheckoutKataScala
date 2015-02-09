@@ -8,9 +8,7 @@ object CheckoutSystem {
     type Price = Int
 
     def checkout(products: Item*) = {
-        val offerMap: Map[Offer, Seq[Item]] = products groupBy (item => offerFor(item))
-
-        offerMap map { case (offer, items) => offer.calculate(items)} sum
+        products.groupBy(offerFor).map({ case (offer, items) => offer.calculate(items)}).sum
     }
 
 }
