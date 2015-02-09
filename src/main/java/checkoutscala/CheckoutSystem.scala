@@ -60,6 +60,7 @@ object CheckoutSystem {
         product match {
             case "Apple" => 60
             case "Orange" => 25
+            case "Banana" => 20
         }
     }
 
@@ -69,6 +70,7 @@ object CheckoutSystem {
         product match {
             case "Apple" => Offer(1, 1)
             case "Orange" => Offer(2, 1)
+            case _ => Offer(1, 0)
         }
     }
 

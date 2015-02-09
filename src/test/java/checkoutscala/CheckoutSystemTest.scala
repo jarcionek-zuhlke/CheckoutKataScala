@@ -6,6 +6,7 @@ class CheckoutSystemTest extends FlatSpec with Matchers {
 
     val APPLE_PRICE: Int = 60
     val ORANGE_PRICE: Int = 25
+    val BANANA_PRICE: Int = 20
 
     val checkoutSystem = CheckoutSystem
 
@@ -27,6 +28,10 @@ class CheckoutSystemTest extends FlatSpec with Matchers {
 
     "orange" should "be in offer \"buy two, get one free\"" in {
         checkoutSystem.checkout("Orange", "Orange", "Orange") should be (2 * ORANGE_PRICE)
+    }
+
+    "single banana" should "cost 20p" in {
+        checkoutSystem.checkout("Banana") should be (BANANA_PRICE)
     }
 
 }
