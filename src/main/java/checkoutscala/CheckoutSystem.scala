@@ -38,6 +38,7 @@ object CheckoutSystem {
             case "Apple" => 60
             case "Orange" => 25
             case "Banana" => 20
+            case "Pineapple" => 100
         }
     }
 

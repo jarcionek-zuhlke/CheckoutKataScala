@@ -7,6 +7,7 @@ class CheckoutSystemTest extends FlatSpec with Matchers {
     val APPLE_PRICE: Int = 60
     val ORANGE_PRICE: Int = 25
     val BANANA_PRICE: Int = 20
+    val PINEAPPLE_PRICE: Int = 100
 
     val checkoutSystem = CheckoutSystem
 
@@ -40,6 +41,10 @@ class CheckoutSystemTest extends FlatSpec with Matchers {
 
     "multiple items with different prices in the same offer" should "give the cheapest possible price" in {
         checkoutSystem.checkout("Apple", "Apple", "Apple", "Banana", "Banana", "Banana") should be (2 * APPLE_PRICE + BANANA_PRICE)
+    }
+
+    "3 pineapples without offers" should "cost £3.00" in {
+        checkoutSystem.checkout("Pineapple", "Pineapple", "Pineapple") should be (3 * PINEAPPLE_PRICE)
     }
 
 }
