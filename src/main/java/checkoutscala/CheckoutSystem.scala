@@ -8,17 +8,11 @@ object CheckoutSystem {
     type Price = Int
 
     def checkout(products: Item*) = {
-        val offerMap: Map[Offer, Seq[Item]] = products groupBy(item => offerFor(item))
+        val offerMap: Map[Offer, Seq[Item]] = products groupBy (item => offerFor(item))
 
-        var totalPrice = 0
-
-        for ((offer: Offer, items: Seq[Item]) <- offerMap) {
-            totalPrice += offer.calculate(items)
-        }
-
-        totalPrice
+        offerMap map { case (offer, items) => offer.calculate(items)} sum
     }
-    
+
     private def priceOf(product: Item): Price = {
         product match {
             case "Apple" => 60
@@ -42,7 +36,8 @@ object CheckoutSystem {
             var gotFreeCount = 0
 
             for (price <- prices) {
-                if (paidCount == payFor && gotFreeCount < getFree) { // get current item (price) for free
+                if (paidCount == payFor && gotFreeCount < getFree) {
+                    // get current item (price) for free
                     gotFreeCount += 1
                     if (gotFreeCount == getFree) {
                         paidCount = 0
@@ -59,7 +54,7 @@ object CheckoutSystem {
     }
 
     private object NoOffer extends Offer {
-        override def calculate(items: Seq[Item]): Price = items map(item => priceOf(item)) sum
+        override def calculate(items: Seq[Item]): Price = items map (item => priceOf(item)) sum
     }
 
     private def offerFor(product: Item): Offer = {
