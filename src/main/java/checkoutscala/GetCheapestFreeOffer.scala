@@ -6,14 +6,18 @@ import checkoutscala.PriceProvider.priceOf
 case class GetCheapestFreeOffer(payFor: Int, getFree: Int) extends Offer {
 
     override def calculate(items: Seq[Item]): Price = {
-        var totalPrice = 0
-
         val prices: Seq[Price] = items.map(item => priceOf(item)).sorted.reverse
+
+        prices.foldLeft(new Result)((result, nextPrice) => result.update(nextPrice)).totalPrice
+    }
+
+    private class Result {
 
         var paidCount = 0
         var gotFreeCount = 0
+        var totalPrice = 0
 
-        for (price <- prices) {
+        def update(price: Price): Result = {
             if (paidCount == payFor) {
                 // get current item (price) for free
                 gotFreeCount += 1
@@ -25,9 +29,9 @@ case class GetCheapestFreeOffer(payFor: Int, getFree: Int) extends Offer {
                 totalPrice += price
                 paidCount += 1
             }
+            this
         }
 
-        totalPrice
     }
 
 }
