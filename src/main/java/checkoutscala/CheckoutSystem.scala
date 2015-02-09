@@ -6,12 +6,12 @@ object CheckoutSystem {
     type Price = Int
 
     def checkout(products: Item*) = {
-        val offerMap: Map[Offer, List[Item]] = createMap(products)
+        val offerMap: Map[Offer, Seq[Item]] = products groupBy(item => offerFor(item))
 
         var totalPrice = 0
 
-        for ((offer: Offer, items: List[Item]) <- offerMap) {
-            val prices: List[Price] = items.map(item => priceOf(item)).sorted.reverse
+        for ((offer: Offer, items: Seq[Item]) <- offerMap) {
+            val prices: Seq[Price] = items.map(item => priceOf(item)).sorted.reverse
 
             var paidCount = 0
             var gotFreeCount = 0
@@ -31,28 +31,6 @@ object CheckoutSystem {
         }
 
         totalPrice
-    }
-
-    private def createMap(products: Seq[Item]): Map[Offer, List[Item]] = {
-        var offers: Set[Offer] = Set()
-
-        for (item <- products) {
-            offers = offers.+(offerFor(item))
-        }
-
-        var offerMap: Map[Offer,List[Item]] = Map()
-
-        for (offer <- offers) {
-            var items: List[Item] = List()
-            for (item <- products) {
-                if (offerFor(item) == offer) {
-                    items = items :+ item
-                }
-            }
-            offerMap = offerMap.+((offer, items))
-        }
-
-        offerMap
     }
     
     private def priceOf(product: Item): Price = {
