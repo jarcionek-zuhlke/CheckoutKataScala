@@ -10,6 +10,9 @@ object PriceProvider {
             case "Orange" => 25
             case "Banana" => 20
             case "Pineapple" => 100
+            case "Expensive Screwdriver" => 1000
+            case "Moderate Screwdriver" => 500
+            case "Cheap Screwdriver" => 100
         }
     }
 

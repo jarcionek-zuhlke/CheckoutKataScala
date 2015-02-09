@@ -47,4 +47,19 @@ class CheckoutSystemTest extends FlatSpec with Matchers {
         checkoutSystem.checkout("Pineapple", "Pineapple", "Pineapple") should be (3 * PINEAPPLE_PRICE)
     }
 
+    "multiple different items in offer \"buy 3, get 2 free\"" should "work" in {
+        val a = "Expensive Screwdriver"
+        val b = "Moderate Screwdriver"
+        val c = "Cheap Screwdriver"
+
+        val ap = 1000
+        val bp = 500
+        val cp = 100
+
+        checkoutSystem.checkout(a, b, c) should be (ap + bp + cp)
+        checkoutSystem.checkout(a, a, a, b, c) should be (3 * ap)
+        checkoutSystem.checkout(a, a, b, b, c, c) should be (ap + ap + bp + cp)
+        checkoutSystem.checkout(a, a, a, a, b, b, b, b, c, c, c, c) should be (3 * ap + 3 * bp + 2 * cp)
+    }
+
 }
