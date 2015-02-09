@@ -8,30 +8,34 @@ case class GetCheapestFreeOffer(payFor: Int, getFree: Int) extends Offer {
     override def calculate(items: Seq[Item]): Price = {
         val prices: Seq[Price] = items.map(item => priceOf(item)).sorted.reverse
 
-        prices.foldLeft(new Result)((result, nextPrice) => result.update(nextPrice)).totalPrice
+        val initialResult: Result = Paying(0, payFor)
+
+        prices.foldLeft(initialResult)((result, nextPrice) => result.update(nextPrice)).totalPrice
     }
 
-    private class Result {
+    private trait Result {
+        val totalPrice: Price
+        def update(price: Price): Result
+    }
 
-        var paidCount = 0
-        var gotFreeCount = 0
-        var totalPrice = 0
-
-        def update(price: Price): Result = {
-            if (paidCount == payFor) {
-                // get current item (price) for free
-                gotFreeCount += 1
-                if (gotFreeCount == getFree) {
-                    paidCount = 0
-                    gotFreeCount = 0
-                }
+    private case class Paying(totalPrice: Price, remaining: Int) extends Result {
+        override def update(price: Price): Result = {
+            if (remaining == 1) {
+                GettingFree(totalPrice + price, getFree)
             } else {
-                totalPrice += price
-                paidCount += 1
+                Paying(totalPrice + price, remaining - 1)
             }
-            this
         }
+    }
 
+    private case class GettingFree(totalPrice: Price, remaining: Int) extends Result {
+        override def update(price: Price): Result = {
+            if (remaining == 1) {
+                Paying(totalPrice, payFor)
+            } else {
+                GettingFree(totalPrice, remaining - 1)
+            }
+        }
     }
 
 }
