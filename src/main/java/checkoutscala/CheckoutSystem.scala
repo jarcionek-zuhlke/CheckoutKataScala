@@ -17,9 +17,8 @@ object CheckoutSystem {
             var gotFreeCount = 0
 
             for (price <- prices) {
-                if (paidCount == offer.payFor && gotFreeCount < offer.getFree) {
+                if (paidCount == offer.payFor && gotFreeCount < offer.getFree) { // get current item (price) for free
                     gotFreeCount += 1
-                    // get current item for free
                     if (gotFreeCount == offer.getFree) {
                         paidCount = 0
                         gotFreeCount = 0

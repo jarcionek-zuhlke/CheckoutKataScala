@@ -38,4 +38,8 @@ class CheckoutSystemTest extends FlatSpec with Matchers {
         checkoutSystem.checkout("Banana", "Apple") should be (APPLE_PRICE)
     }
 
+    "multiple items with different prices in the same offer" should "give the cheapest possible price" in {
+        checkoutSystem.checkout("Apple", "Apple", "Apple", "Banana", "Banana", "Banana") should be (2 * APPLE_PRICE + BANANA_PRICE)
+    }
+
 }
