@@ -21,8 +21,12 @@ class CheckoutSystemTest extends FlatSpec with Matchers {
         checkoutSystem.checkout("Apple", "Orange", "Orange") should be (APPLE_PRICE + 2 * ORANGE_PRICE)
     }
 
-    "apple" should "be in offer \"buy one get one free\"" in {
+    "apple" should "be in offer \"buy one, get one free\"" in {
         checkoutSystem.checkout("Apple", "Apple") should be (APPLE_PRICE)
+    }
+
+    "orange" should "be in offer \"buy two, get one free\"" in {
+        checkoutSystem.checkout("Orange", "Orange", "Orange") should be (2 * ORANGE_PRICE)
     }
 
 }

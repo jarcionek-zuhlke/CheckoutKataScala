@@ -68,7 +68,7 @@ object CheckoutSystem {
     private def offerFor(product: Item): Offer = {
         product match {
             case "Apple" => Offer(1, 1)
-            case _ => Offer(1, 0)
+            case "Orange" => Offer(2, 1)
         }
     }
 
