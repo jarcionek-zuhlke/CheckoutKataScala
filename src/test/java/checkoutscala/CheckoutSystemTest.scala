@@ -14,4 +14,8 @@ class CheckoutSystemTest extends FlatSpec with Matchers {
         checkoutSystem.checkout("Orange") should be (25)
     }
 
+    "3 apples and orange" should "cost £2.05" in {
+        checkoutSystem.checkout("Apple", "Apple", "Orange", "Apple") should be (205)
+    }
+
 }
