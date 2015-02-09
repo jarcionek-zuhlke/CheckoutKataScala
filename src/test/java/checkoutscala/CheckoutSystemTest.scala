@@ -62,4 +62,8 @@ class CheckoutSystemTest extends FlatSpec with Matchers {
         checkoutSystem.checkout(a, a, a, a, b, b, b, b, c, c, c, c) should be (3 * ap + 3 * bp + 2 * cp)
     }
 
+    "single mango" should "cost 37p" in {
+        checkoutSystem.checkout("Mango") should be (37)
+    }
+
 }

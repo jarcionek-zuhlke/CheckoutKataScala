@@ -13,6 +13,7 @@ object PriceProvider {
             case "Expensive Screwdriver" => 1000
             case "Moderate Screwdriver" => 500
             case "Cheap Screwdriver" => 100
+            case "Mango" => 37
         }
     }
 
