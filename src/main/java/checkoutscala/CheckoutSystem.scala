@@ -2,8 +2,13 @@ package checkoutscala
 
 object CheckoutSystem {
 
-    def checkout(products: String*) = {
-        60
+    type Item = String
+
+    def checkout(product: Item) = {
+        product match {
+            case "Apple" => 60
+            case "Orange" => 25
+        }
     }
 
 }
